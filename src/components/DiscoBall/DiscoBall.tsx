@@ -5,15 +5,15 @@ import { Canvas, extend, useFrame, useThree, useLoader } from 'react-three-fiber
 import { BackSide, Mesh, Vector3, Euler, BufferGeometry, MeshMatcapMaterial, TextureLoader } from 'three';
 
 interface DiscoBallProps {
-    position: Vector3;
-    radius: number;
-    mirrorSize: number;
-    mirrorSpacing: number;
+    position?: Vector3;
+    radius?: number;
+    mirrorSize?: number;
+    mirrorSpacing?: number;
 }
 
-const DiscoBall: React.FC<DiscoBallProps> = ({ position, radius, mirrorSize, mirrorSpacing}) => {
-    const meshRef = useRef<Mesh>();
-    const planeGroupRef = useRef<Mesh>();
+const DiscoBall: React.FC<DiscoBallProps> = ({ position = new Vector3(0,0,0), radius = 2, mirrorSize = 0.15, mirrorSpacing = 1.18}) => {
+    const meshRef = useRef<Mesh>(null);
+    const planeGroupRef = useRef<Mesh>(null);
     const [shouldRotate, setShouldRotate] = useState<boolean>(false);
 
     // calculates mirror placement
@@ -51,8 +51,8 @@ const DiscoBall: React.FC<DiscoBallProps> = ({ position, radius, mirrorSize, mir
     // Rotate the disco ball
     useFrame(() => {
       if (meshRef.current && shouldRotate) {
-        meshRef.current.rotation.x += 0.005;
-        meshRef.current.rotation.y += 0.005;
+        meshRef.current.rotation.x += 0.0005;
+        meshRef.current.rotation.y += 0.0005;
       }
     });
 
@@ -80,8 +80,8 @@ const Mirror: React.FC<MirrorProps> = ({size, position, center}) => {
 
     const noise = Math.random() * 0.1 + 1;
     position.multiply(new Vector3(noise, noise, noise))
-    const mirrorTexture = useLoader(TextureLoader, '/ob.jpg')
-    const meshRef = useRef<Mesh>();
+    const mirrorTexture = useLoader(TextureLoader, '/matcap/desert-2.png')
+    const meshRef = useRef<Mesh>(null);
 
     useEffect(() => {
         if (meshRef.current) {
@@ -91,18 +91,23 @@ const Mirror: React.FC<MirrorProps> = ({size, position, center}) => {
         }
     }, [meshRef])
 
+    useFrame(() => {
+
+    })
+
     return (
         <mesh ref={meshRef} position={position}>
-            <planeGeometry args={[size, size]} />
+            {/* <planeGeometry args={[size, size]} /> */}
+            <circleGeometry args={[((Math.random() * 0.8 + 0.6) * size) / 2]} />
             <meshMatcapMaterial matcap={mirrorTexture} side={BackSide} />
         </mesh>
     )
 }
 
-const DiscoBallApp: React.FC = () => {
+const DiscoBallApp: React.FC<DiscoBallProps> = (props) => {
     return (
         <Canvas>
-            <DiscoBall mirrorSize={0.15} mirrorSpacing={1.18} position={new Vector3(0, 0, 0)} radius={2.25} />
+            <DiscoBall {...props} />
         </Canvas>
     );
 };

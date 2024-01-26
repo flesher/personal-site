@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const robo = Roboto_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,10 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'/>
-      </head>
-      <body className={inter.className}>{children}</body>
+      <body className={robo.className}>{children}</body>
     </html>
   );
 }

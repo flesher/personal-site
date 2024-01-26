@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.canvasWrapper}>
-        <DiscoBall />
+        <DiscoBall radius={2.25} />
       </div>
       <div className={styles.copyWrapper}>
         <h1 className={styles.heading}>Hi, I'm Matt and I like to make stuff.</h1>

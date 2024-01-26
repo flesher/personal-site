@@ -1,0 +1,29 @@
+.pageHeading {
+    font-size: 32px;
+    line-height: 1.5em;
+    font-weight: 600;
+}
+
+.sectionHeading {
+    font-size: 20px;
+    line-height: 1.5em;
+    font-weight: 600;
+}
+
+.copyIntro {
+    font-size: 22px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+.copyParagraph {
+    font-size: 16px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+.copyLabel {
+    font-size: 12px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
