@@ -1,0 +1,13 @@
+$breakpoints: (
+    small: 600px,
+    medium: 1000px,
+    large: 1400px,
+);
+
+@mixin viewport($name) {
+    $bp: map-get($breakpoints, $name);
+    
+    @media screen and (min-width: #{$bp}) {
+        @content;
+    }
+}

@@ -29,3 +29,8 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 .next
+.vercel
+
+# Env variables
+.env.local
+.env.development.local

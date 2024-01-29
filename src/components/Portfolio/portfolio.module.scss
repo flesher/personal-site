@@ -1,0 +1,161 @@
+@import "@/styles/typography.scss";
+@import "@/styles/viewports.scss";
+
+.coverLetter {
+    max-width: 800px;
+    display: block;
+    margin: 0 auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: left;
+}
+
+.coverLetter {
+    h1 {
+        margin-bottom: 50px;
+        margin-bottom: 50px;
+        @include use-typography("32_semibold");
+    }
+
+    p {
+        @include use-typography("22_regular");
+        margin-bottom: 20px;
+    }
+}
+
+.logoWrapper {
+    height: 200px;
+    width: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+.portfolioPiece {
+    padding-bottom: 150px;
+}
+
+.infoWrapper {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 25px;
+    max-width: 1400px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0 50px 30px 50px;
+    align-items: center;
+
+    @include viewport(medium) {
+        align-items: start; 
+        grid-template-columns: 1fr 650px 1fr;
+        gap: 50px;
+    }
+}
+
+.companyInfo {
+    h2 {
+        @include use-typography("20_semibold");
+    }
+
+    p {
+        @include use-typography("12_regular");
+    }
+}
+
+.description {
+    p {
+        @include use-typography("16_regular");
+    }
+}
+
+.technologies {
+    @include use-typography("12_regular")
+}
+
+.techList {
+    list-style: none;
+
+    li {
+        margin: 0 0 5px 0;
+    }
+
+    span {
+        background: white;
+        padding: 0 10px;
+        line-height: 14px;
+        border-radius: 14px;
+        white-space: nowrap;
+    }
+}
+
+.showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 0 4px;
+
+    @include viewport(medium) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+.showcaseItem {
+    background: white;
+    position: relative;
+
+    &:hover {
+        .showcaseItemInfo {
+            opacity: 0.8; 
+            pointer-events: all;
+
+            .showcaseItemInfoInner {
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: black;
+}
+
+.showcaseItemInfo {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    color: #fff;
+    opacity: 0.0001;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    transition: opacity 0.6s;
+
+    .showcaseItemInfoInner {
+        transition: transform 0.6s;
+        transform: translateY(10px);
+        max-width: 330px;
+        width: 100%;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+
+    a {
+        display: inline-block;
+        margin-top: 12px;
+        svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        &:hover {
+            opacity: 0.75;
+        }
+    }
+}

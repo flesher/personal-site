@@ -2,21 +2,33 @@
 
 import React from 'react';
 import classnames from "classnames";
+import { ArrowUpRight } from 'react-feather';
 
-import styles from './portfolio.module.css';
-import typography from '@/app/typography.module.css'
-import DiscoBall from "@/components/DiscoBall/DiscoBall";
+import styles from './portfolio.module.scss';
+// import DiscoBall from "@/components/DiscoBall/DiscoBall";
 
 interface ImageProps {
     src: string;
+    alt?: string;
 }
 
-interface ShowCaseItemProps {
-    img: ImageProps,
-    title: string;
-    description?: string;
-    links?: string[];
+interface LinkProps {
+    url: string,
+    text: string,
+    ariaLabel?: string,
+    external?: boolean,
+}
+
+interface ShowcaseItemInfoProps {
+    description: string;
+    links?: LinkProps[];
     awards?: string[];
+}
+
+interface ShowcaseItemProps {
+    img: ImageProps;
+    title: string;
+    info?: ShowcaseItemInfoProps;
 }
 
 interface PieceProps {
@@ -31,11 +43,11 @@ interface PieceProps {
     techTags: string[];
     showcase: {
         layout?: number;
-        items: ShowCaseItemProps[];
+        items: ShowcaseItemProps[];
     }
 }
 
-interface PortfolioProps {
+export interface PortfolioProps {
     headline: string;
     intro: string[];
     pieces: PieceProps[]
@@ -47,15 +59,13 @@ const Portfolio: React.FC<PortfolioProps> = ({headline, intro, pieces}) => {
         <>
             <header className={styles.coverLetter}>
                 {/* <div className={styles.logoWrapper}><DiscoBall /></div> */}
-                <h1 className={typography.pageHeading}>{headline}</h1>
-                { intro.map((i) => <p className={typography.copyIntro}>{i}</p>) }
+                <h1 className={styles.pageHeading}>{headline}</h1>
+                { intro.map((intro, i) => <p key={i}>{intro}</p>) }
             </header>
             { pieces.map((p, i) => <Piece {...p} key={i} />) }
         </>
     )
 }
-
-
 
 const Piece: React.FC<PieceProps> = ({
     company, 
@@ -70,28 +80,31 @@ const Piece: React.FC<PieceProps> = ({
         <section className={styles.portfolioPiece}>
             <div className={styles.infoWrapper}>
                 <div className={styles.companyInfo}>
-                    <h2 className={typography.sectionHeading}>{ company }</h2>
-                    { position ? <p className={typography.copyLabel}>{ position }</p> : '' }
-                    { dates ? <p className={typography.copyLabel}>{ dates }</p> : '' }
-                    { website ? <a className={typography.copyLabel} href={website.url}>{ website.text }</a> : '' }
+                    <h2>{ company }</h2>
+                    { position ? <p>{ position }</p> : '' }
+                    { dates ? <p>{ dates }</p> : '' }
+                    { website ? <a href={website.url}>{ website.text }</a> : '' }
                 </div>
 
                 <div className={styles.description}>
-                    { description.map((d, i) => <p className={typography.copyParagraph} key={i}>{d}</p>) }
+                    { description.map((d, i) => <p key={i}>{d}</p>) }
                 </div>
                 <div className={styles.technologies}>
                     <ul className={styles.techList}>
-                        { techTags.map((t, i) => <li key={i}><span className={classnames(styles.techListItem, typography.copyLabel)}>{t}</span></li> )}
+                        { techTags.map((t, i) => <li key={i}><span>{t}</span></li> )}
                     </ul>
                 </div>
             </div>
             <div className={styles.showcase}>
                 { showcase.items.map((item, i) => {
+
                     return (
                         <div className={styles.showcaseItem} key={i}>
-                            <div className={styles.image}></div>
-                            <p className={classnames(styles.imageCaption, typography.copyLabel)}>{item.title}</p>
-                        </div>
+                            <Image {...item.img} />
+                            { item.info?         
+                                <ShowcaseItemInfo {...item.info} />
+                            : ''}
+                        </div>  
                     )
                 })}
             </div>
@@ -99,9 +112,20 @@ const Piece: React.FC<PieceProps> = ({
     )
 }
 
-const Image: React.FC<ImageProps> = ({src}) => {
+const ShowcaseItemInfo: React.FC<ShowcaseItemInfoProps> = ({description, links = []}) => {
     return (
-        <figure></figure>
+        <div className={styles.showcaseItemInfo}>
+            <div className={styles.showcaseItemInfoInner}>
+                <p>{description}</p>
+                { links.map((link, i) => <a href={link.url} key={i}>{link.text}{ link.external ? <ArrowUpRight /> : '' }</a>) }
+            </div> 
+        </div>
+    )
+}
+
+const Image: React.FC<ImageProps> = ({src, alt = ''}) => {
+    return (
+        <img className={styles.image} src={src} alt={alt}></img>
     )
 }
 

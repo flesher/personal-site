@@ -1,0 +1,67 @@
+@use "sass:map";
+
+.pageHeading {
+    font-size: 32px;
+    line-height: 1.5em;
+    font-weight: 600;
+}
+
+.sectionHeading {
+    font-size: 20px;
+    line-height: 1.5em;
+    font-weight: 600;
+}
+
+.copyIntro {
+    font-size: 22px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+.copyParagraph {
+    font-size: 16px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+.copyLabel {
+    font-size: 12px;
+    line-height: 1.5em;
+    font-weight: 400;
+}
+
+
+$typography-map: (
+    "32_semibold": (
+        "size": 32px,
+        "weight": 600,
+        "line-height": 1.5em,       
+    ),
+    "22_regular": (
+        "size": 22px,
+        "weight": 400,
+        "line-height": 1.5em,  
+    ),
+    "20_semibold": (
+        "size": 20px,
+        "weight": 600,
+        "line-height": 1.5em,       
+    ),
+    "16_regular": (
+        "size": 16px,
+        "weight": 400,
+        "line-height": 1.5em,
+    ),
+    "12_regular": (
+        "size": 12px,
+        "weight": 400,
+        "line-height": 1.5em,    
+    )
+);
+
+@mixin use-typography($name) {
+    $styles: map-get($typography-map, $name);
+    font-size: map-get($styles, "size");
+    line-height: map-get($styles, "line-height");
+    font-weight: map-get($styles, "weight");
+}
