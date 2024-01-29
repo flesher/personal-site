@@ -32,17 +32,25 @@ export async function generateStaticParams() {
 }
 
 async function getPost(params: ParamsProps ) {
-  const res = await fetch(process.env['DOMAIN'] + '/api/data');
-  const pages = await res.json();
+  const res: PageResponse | null = await kv.get('pages');
 
-  return pages.find((p: PageProps) => (p.slug == params.portfolioSlug));
+  if (res) {
+    const pages = res.pages;
+    return pages.find((p: PageProps) => (p.slug == params.portfolioSlug));
+  }
+
+  return null;
 }
  
 export default async function Page({ params }: { params: ParamsProps }) {
   const page = await getPost(params);
-  return (
-    <main className={styles.main}>
-        <Portfolio {...page.data} />
-    </main>
-  );
+  if (page) {
+    return (
+      <main className={styles.main}>
+          <Portfolio {...page.data} />
+      </main>
+    );
+  }
+
+  return false;
 }
