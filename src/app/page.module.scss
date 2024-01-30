@@ -1,3 +1,5 @@
+@import "@/styles/typography.scss";
+
 .main {
   display: flex;
   flex-direction: column;
@@ -12,7 +14,20 @@
   left: 0;
   width: 100vw;
   height: 75vh;
+
+  canvas {
+    opacity: 0.001;
+    transform: scale3d(0.9, 0.9, 0.9);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  
+  }
+
+  &.showDiscoBall canvas {
+    opacity: 0.999;
+    transform: scale3d(1, 1, 1);
+  }
 }
+
 
 .copyWrapper {
   width: 100%;
@@ -22,14 +37,25 @@
 }
 
 .heading {
-  font-size: 20px;
-  font-weight: 400;
+  @include use-typography("20_semibold");
   margin-bottom: 1em;
 }
 
 .copy {
-  font-weight: 200;
-  font-size: 16px;
-  opacity: 0.8;
+  @include use-typography("16_regular");
   margin-bottom: 1em;
+}
+
+.contactLinks {
+  width: 120px;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 50px auto;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
 }

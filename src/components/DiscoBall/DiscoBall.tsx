@@ -2,45 +2,58 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, extend, useFrame, useThree, useLoader } from 'react-three-fiber';
-import { BackSide, Mesh, Vector3, Euler, BufferGeometry, MeshMatcapMaterial, TextureLoader } from 'three';
+import { BackSide, Mesh, Vector3, Euler, BufferGeometry, MeshMatcapMaterial, TextureLoader, CircleGeometry } from 'three';
 
 interface DiscoBallProps {
     position?: Vector3;
     radius?: number;
     mirrorSize?: number;
     mirrorSpacing?: number;
+    matCapPath?: string
 }
 
-const DiscoBall: React.FC<DiscoBallProps> = ({ position = new Vector3(0,0,0), radius = 2, mirrorSize = 0.15, mirrorSpacing = 1.18}) => {
+const DiscoBall: React.FC<DiscoBallProps> = ({ 
+    position = new Vector3(0,0,0), 
+    radius = 2, 
+    mirrorSize = 0.15, 
+    mirrorSpacing = 1.18, 
+    matCapPath = '/matcap/desert-2.png'
+}) => {
     const meshRef = useRef<Mesh>(null);
     const planeGroupRef = useRef<Mesh>(null);
     const [shouldRotate, setShouldRotate] = useState<boolean>(false);
+    const [mirrorData, setMirrorData] = useState<Vector3[]>([])
 
     // calculates mirror placement
     // 1. calculate y angle based on how many mirrors will fit in a meridian
     // 2. calculating the circumference of the sphere at each latitude
     // 3. determine the x angle, by how many mirrors will fit in that latitude
     // 4. calculating x, y, and z using those angles, the sphere radius and the latitude radius
-    const mirrorData = [];
-    const latSpread = (mirrorSize * mirrorSpacing) / radius;
-    const startLat = (Math.PI / 2);
-    let currentLat = startLat;
+    useEffect(() => {
+        const _mirrorData = [];
+        const latSpread = (mirrorSize * mirrorSpacing) / radius;
+        const startLat = (Math.PI / 2);
+        let currentLat = startLat;
+    
+        while (currentLat > -1 * startLat) {
+            const latRadius = radius * Math.cos(currentLat);
+            const y = radius * Math.sin(currentLat);
+            const numMirrors = Math.floor((2 * Math.PI * latRadius) / (mirrorSize * mirrorSpacing));
+            const angleSpread = (2 * Math.PI) / numMirrors;
+         
+            for (let i = 0; i < numMirrors; i++) {
+                const angle = i * angleSpread;
+                const x = latRadius * Math.cos(angle);
+                const z = latRadius * Math.sin(angle);
 
-    while (currentLat > -1 * startLat) {
-        const latRadius = radius * Math.cos(currentLat);
-        const y = radius * Math.sin(currentLat);
-        const numMirrors = Math.floor((2 * Math.PI * latRadius) / (mirrorSize * mirrorSpacing));
-        const angleSpread = (2 * Math.PI) / numMirrors;
-     
-        for (let i = 0; i < numMirrors; i++) {
-            const angle = i * angleSpread;
-            const x = latRadius * Math.cos(angle);
-            const z = latRadius * Math.sin(angle);
-            mirrorData.push({x, y, z})
+                _mirrorData.push(new Vector3(x, y, z))
+            }
+    
+            currentLat -= latSpread;
         }
 
-        currentLat -= latSpread;
-    }
+        setMirrorData(_mirrorData);
+    }, [mirrorSize, mirrorSpacing, radius])
 
     // flips flag after first render
     useEffect(() => {
@@ -62,7 +75,7 @@ const DiscoBall: React.FC<DiscoBallProps> = ({ position = new Vector3(0,0,0), ra
 
             {/* Add mirrors */}
             <mesh ref={planeGroupRef}>
-                {mirrorData.map( (m, i) => <Mirror size={mirrorSize} position={new Vector3(m.x, m.y, m.z)} center={position} key={i} /> )}
+                {mirrorData.map( (m, i) => <Mirror size={mirrorSize} position={m} center={position} key={i} /> )}
             </mesh>
         </mesh>
 
@@ -82,23 +95,18 @@ const Mirror: React.FC<MirrorProps> = ({size, position, center}) => {
     position.multiply(new Vector3(noise, noise, noise))
     const mirrorTexture = useLoader(TextureLoader, '/matcap/desert-2.png')
     const meshRef = useRef<Mesh>(null);
+    const randomSize = ((Math.random() * 0.8 + 0.6) * size) / 2;
 
     useEffect(() => {
         if (meshRef.current) {
-            // const n = new Vector3(Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05, Math.random() * 0.1 - 0.05)
-            // meshRef.current.lookAt(center.clone().add(n));
             meshRef.current.lookAt(center);
         }
     }, [meshRef])
 
-    useFrame(() => {
-
-    })
 
     return (
         <mesh ref={meshRef} position={position}>
-            {/* <planeGeometry args={[size, size]} /> */}
-            <circleGeometry args={[((Math.random() * 0.8 + 0.6) * size) / 2]} />
+            <circleGeometry args={[randomSize]} />
             <meshMatcapMaterial matcap={mirrorTexture} side={BackSide} />
         </mesh>
     )

@@ -29,6 +29,10 @@ body {
 a {
   color: inherit;
   text-decoration: underline;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.75;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

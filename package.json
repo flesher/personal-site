@@ -2,12 +2,13 @@
   "name": "personal-site",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync": "env-cmd -f .env.local node scripts/sync.js"
+    "sync": "env-cmd -f .env.local node scripts/sync.js && rm -rf .next"
   },
   "dependencies": {
     "@types/three": "^0.160.0",
@@ -19,7 +20,8 @@
     "react-dom": "^18",
     "react-feather": "^2.0.10",
     "react-three-fiber": "^6.0.13",
-    "three": "^0.160.1"
+    "three": "^0.160.1",
+    "universal-cookie": "^7.0.2"
   },
   "devDependencies": {
     "@types/cookie": "^0.6.0",

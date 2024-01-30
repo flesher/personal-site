@@ -37,6 +37,11 @@ $typography-map: (
         "weight": 600,
         "line-height": 1.5em,       
     ),
+    "24_semibold": (
+        "size": 24px,
+        "weight": 600,
+        "line-height": 1.5em,       
+    ),
     "22_regular": (
         "size": 22px,
         "weight": 400,
@@ -47,8 +52,33 @@ $typography-map: (
         "weight": 600,
         "line-height": 1.5em,       
     ),
+    "18_semibold": (
+        "size": 18x,
+        "weight": 600,
+        "line-height": 1.5em,       
+    ),
+    "16_semibold": (
+        "size": 16px,
+        "weight": 600,
+        "line-height": 1.5em,
+    ),
+    "14_semibold": (
+        "size": 14px,
+        "weight": 600,
+        "line-height": 1.5em,
+    ),
+    "18_regular": (
+        "size": 18px,
+        "weight": 400,
+        "line-height": 1.5em,
+    ),
     "16_regular": (
         "size": 16px,
+        "weight": 400,
+        "line-height": 1.5em,
+    ),
+    "14_regular": (
+        "size": 14px,
         "weight": 400,
         "line-height": 1.5em,
     ),

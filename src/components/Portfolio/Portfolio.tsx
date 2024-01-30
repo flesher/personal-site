@@ -20,6 +20,7 @@ interface LinkProps {
 }
 
 interface ShowcaseItemInfoProps {
+    title: string;
     description: string;
     links?: LinkProps[];
     awards?: string[];
@@ -83,7 +84,7 @@ const Piece: React.FC<PieceProps> = ({
                     <h2>{ company }</h2>
                     { position ? <p>{ position }</p> : '' }
                     { dates ? <p>{ dates }</p> : '' }
-                    { website ? <a href={website.url}>{ website.text }</a> : '' }
+                    { website ? <p><a href={website.url}>{ website.text }</a></p> : ''}
                 </div>
 
                 <div className={styles.description}>
@@ -112,12 +113,13 @@ const Piece: React.FC<PieceProps> = ({
     )
 }
 
-const ShowcaseItemInfo: React.FC<ShowcaseItemInfoProps> = ({description, links = []}) => {
+const ShowcaseItemInfo: React.FC<ShowcaseItemInfoProps> = ({title, description, links = []}) => {
     return (
         <div className={styles.showcaseItemInfo}>
             <div className={styles.showcaseItemInfoInner}>
+                <h3>{title}</h3>
                 <p>{description}</p>
-                { links.map((link, i) => <a href={link.url} key={i}>{link.text}{ link.external ? <ArrowUpRight /> : '' }</a>) }
+                { links.map((link, i) => <p key={i}><a href={link.url} target="_blank">{link.text}{ link.external ? <ArrowUpRight /> : '' }</a></p>) }
             </div> 
         </div>
     )
