@@ -1,20 +1,6 @@
 @import "@/styles/typography.scss";
 @import "@/styles/viewports.scss";
-
-@mixin section-padding {
-    padding-left: 20px;
-    padding-right: 20px;
-
-    @include viewport(small) {
-        padding-left: 40px;
-        padding-right: 40px;
-    }
-
-    @include viewport(medium) {
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-}
+@import "@/styles/shared.scss";
 
 .coverLetter {
     max-width: 800px;
@@ -23,16 +9,13 @@
     text-align: left;
     box-sizing: content-box;
     @include section-padding;
-    padding-top: 50px;
     padding-bottom: 50px;
     
     @include viewport(small) {
-        padding-top: 80px;
         padding-bottom: 80px;
     }
 
     @include viewport(medium) {
-        padding-top: 100px;
         padding-bottom: 100px;
     }
 

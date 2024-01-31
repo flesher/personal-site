@@ -2,6 +2,7 @@ import styles from "./page.module.scss";
 import Portfolio from "@/components/Portfolio/Portfolio";
 import type { PortfolioProps } from "@/components/Portfolio/Portfolio";
 import { kv } from "@vercel/kv";
+import { ArrowLeft } from "react-feather";
 
 interface PageProps {
   slug: string;
@@ -47,6 +48,10 @@ export default async function Page({ params }: { params: ParamsProps }) {
   if (page) {
     return (
       <main className={styles.main}>
+          <nav className={styles.navWrapper}>
+            <a href="/"><ArrowLeft /></a>
+          </nav>
+          
           <Portfolio {...page.data} />
       </main>
     );
