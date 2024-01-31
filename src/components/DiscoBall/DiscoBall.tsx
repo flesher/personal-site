@@ -75,7 +75,7 @@ const DiscoBall: React.FC<DiscoBallProps> = ({
 
             {/* Add mirrors */}
             <mesh ref={planeGroupRef}>
-                {mirrorData.map( (m, i) => <Mirror size={mirrorSize} position={m} center={position} key={i} /> )}
+                {mirrorData.map( (m, i) => <Mirror size={mirrorSize} position={m} center={position} key={i} matCapPath={matCapPath} /> )}
             </mesh>
         </mesh>
 
@@ -86,16 +86,18 @@ interface MirrorProps {
     size: number;
     position: Vector3 | null;
     center: Vector3;
+    matCapPath: string;
 }
 
-const Mirror: React.FC<MirrorProps> = ({size, position, center}) => {
+const Mirror: React.FC<MirrorProps> = ({size, position, center, matCapPath}) => {
     if (position == null) return;
 
     const noise = Math.random() * 0.1 + 1;
     position.multiply(new Vector3(noise, noise, noise))
-    const mirrorTexture = useLoader(TextureLoader, '/matcap/desert-2.png')
+    const mirrorTexture = useLoader(TextureLoader, matCapPath)
     const meshRef = useRef<Mesh>(null);
-    const randomSize = ((Math.random() * 0.8 + 0.6) * size) / 2;
+
+    const randomSize = ((Math.random() + 0.4) * size) / 2;
 
     useEffect(() => {
         if (meshRef.current) {

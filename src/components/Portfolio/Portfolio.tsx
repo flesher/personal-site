@@ -1,11 +1,9 @@
 'use client';
 
 import React from 'react';
-import classnames from "classnames";
-import { ArrowUpRight } from 'react-feather';
+import { ArrowUpRight, Instagram, GitHub, Mail, Linkedin } from "react-feather";
 
 import styles from './portfolio.module.scss';
-// import DiscoBall from "@/components/DiscoBall/DiscoBall";
 
 interface ImageProps {
     src: string;
@@ -64,6 +62,14 @@ const Portfolio: React.FC<PortfolioProps> = ({headline, intro, pieces}) => {
                 { intro.map((intro, i) => <p key={i}>{intro}</p>) }
             </header>
             { pieces.map((p, i) => <Piece {...p} key={i} />) }
+            <footer>
+                <ul className={styles.contactLinks}>
+                    <li><a target="_blank" href="https://www.instagram.com/mattflesher/"><Instagram /></a></li>
+                    <li><a target="_blank" href="https://github.com/flesher"><GitHub /></a></li>
+                    <li><a target="_blank" href="https://www.linkedin.com/in/matthewflesher/"><Linkedin /></a></li>
+                    <li><a target="_blank" href="mailto:matt.flesher@gmail.com"><Mail /></a></li>
+                </ul>
+            </footer>
         </>
     )
 }

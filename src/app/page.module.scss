@@ -1,4 +1,5 @@
 @import "@/styles/typography.scss";
+@import "@/styles/viewports.scss";
 
 .main {
   display: flex;
@@ -37,13 +38,29 @@
 }
 
 .heading {
-  @include use-typography("20_semibold");
+  @include use-typography("14_semibold");
   margin-bottom: 1em;
+
+  @include viewport(small) {
+    @include use-typography("16_semibold");
+  }
+
+  @include viewport(medium) {
+    @include use-typography("20_semibold");
+  }
 }
 
 .copy {
-  @include use-typography("16_regular");
+  @include use-typography("12_regular");
   margin-bottom: 1em;
+
+  @include viewport(small) {
+    @include use-typography("14_regular");
+  }
+
+  @include viewport(medium) {
+    @include use-typography("16_regular");
+  }
 }
 
 .contactLinks {
