@@ -1,0 +1,14 @@
+@mixin section-padding {
+    padding-left: 20px;
+    padding-right: 20px;
+
+    @include viewport(small) {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    @include viewport(medium) {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
