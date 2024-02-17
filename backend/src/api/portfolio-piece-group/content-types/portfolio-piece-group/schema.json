@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "portfolio_piece_groups",
+  "info": {
+    "singularName": "portfolio-piece-group",
+    "pluralName": "portfolio-piece-groups",
+    "displayName": "Portfolio Piece Group",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "description": {
+      "type": "blocks"
+    },
+    "tech_tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::tech-tag.tech-tag",
+      "inversedBy": "portfolio_piece_groups"
+    },
+    "portfolio_pages": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio-page.portfolio-page",
+      "inversedBy": "portfolio_piece_groups"
+    },
+    "info": {
+      "type": "blocks"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}

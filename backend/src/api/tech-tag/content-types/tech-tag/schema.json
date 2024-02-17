@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tech_tags",
+  "info": {
+    "singularName": "tech-tag",
+    "pluralName": "tech-tags",
+    "displayName": "Tech Tag",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "tag": {
+      "type": "string"
+    },
+    "portfolio_piece_groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio-piece-group.portfolio-piece-group",
+      "mappedBy": "tech_tags"
+    }
+  }
+}

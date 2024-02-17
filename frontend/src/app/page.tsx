@@ -6,7 +6,6 @@ import { Instagram, GitHub, Mail, Linkedin } from "react-feather";
 import classNames from "classnames";
 
 import DiscoBall from "@/components/DiscoBall/DiscoBall";
-import { clear } from "console";
 
 function loadImage(src: string, cb: () => void): void {
   const image = new Image();
