@@ -15,16 +15,33 @@
     "blocks": {
       "type": "blocks"
     },
-    "thumbnail": {
+    "poster_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false,
-      "required": true
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "portfolio_piece_groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio-piece-group.portfolio-piece-group",
+      "mappedBy": "portfolio_pieces"
+    },
+    "info": {
+      "type": "blocks"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "link.custom-link"
     }
   }
 }

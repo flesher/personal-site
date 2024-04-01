@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+
+import configs from "./configs.json" assert { type: "json" };
+
+const nextConfig = {
+    images: {
+        domains: [configs.STRAPI_DOMAIN],
+    },
+};
 
 export default nextConfig;

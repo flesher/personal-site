@@ -1,5 +1,5 @@
 @import "@/styles/typography.scss";
-@import "@/styles/viewports.scss";
+@import "@/styles/viewports.module.scss";
 @import "@/styles/shared.scss";
 
 .coverLetter {
@@ -196,10 +196,14 @@
 }
 
 .image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     background: black;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
 }
 
 .showcaseItemInfo {

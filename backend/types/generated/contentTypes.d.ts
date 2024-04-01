@@ -832,7 +832,15 @@ export interface ApiPortfolioPiecePortfolioPiece extends Schema.CollectionType {
   };
   attributes: {
     blocks: Attribute.Blocks;
-    thumbnail: Attribute.Media & Attribute.Required;
+    poster_image: Attribute.Media & Attribute.Required;
+    title: Attribute.String;
+    portfolio_piece_groups: Attribute.Relation<
+      'api::portfolio-piece.portfolio-piece',
+      'manyToMany',
+      'api::portfolio-piece-group.portfolio-piece-group'
+    >;
+    info: Attribute.Blocks;
+    links: Attribute.Component<'link.custom-link', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -877,6 +885,11 @@ export interface ApiPortfolioPieceGroupPortfolioPieceGroup
     >;
     info: Attribute.Blocks;
     title: Attribute.String;
+    portfolio_pieces: Attribute.Relation<
+      'api::portfolio-piece-group.portfolio-piece-group',
+      'manyToMany',
+      'api::portfolio-piece.portfolio-piece'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

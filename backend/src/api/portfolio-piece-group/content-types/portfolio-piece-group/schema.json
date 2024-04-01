@@ -32,6 +32,12 @@
     },
     "title": {
       "type": "string"
+    },
+    "portfolio_pieces": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio-piece.portfolio-piece",
+      "inversedBy": "portfolio_piece_groups"
     }
   }
 }

@@ -5,17 +5,6 @@ import { kv } from "@vercel/kv";
 import { ArrowLeft } from "react-feather";
 import type { APIResponseCollection, APIResponse } from "@/types/strapi";
 
-// interface PageProps {
-//   slug: string;
-//   password: string;
-//   data: PortfolioProps;
-// }
-
-// interface PageResponse {
-//   data: PageProps[];
-//   ok: boolean;
-// }
-
 interface ParamsProps {
   portfolioSlug: string;
 }
@@ -24,6 +13,12 @@ async function getData(id: number) {
   const res = await fetch("http://127.0.0.1:1337/api/portfolio-pages/" + id + "?" + new URLSearchParams({
     "populate[0]": "portfolio_piece_groups",
     "populate[1]": "portfolio_piece_groups.tech_tags",
+    "populate[2]": "portfolio_piece_groups.portfolio_pieces",
+    "populate[3]": "portfolio_piece_groups.portfolio_pieces.poster_image",
+    "populate[4]": "portfolio_piece_groups.portfolio_pieces.info",
+    "populate[5]": "portfolio_piece_groups.portfolio_pieces.links",
+    "populate[6]": "portfolio_piece_groups.portfolio_pieces.links.meta",
+    "populate[7]": "portfolio_piece_groups.portfolio_pieces.title"
   }), {
     method: 'GET',
     headers: {
@@ -70,7 +65,7 @@ export default async function Page({ params }: { params: ParamsProps }) {
   const page = await getData(1) as APIResponse<"api::portfolio-page.portfolio-page">;
 
   if (page) {
-    console.log('page', page.data.attributes.portfolio_piece_groups?.data);
+    // console.log('page', page.data.attributes.portfolio_piece_groups?.data);
     return (
       <main className={styles.main}>
           <nav className={styles.navWrapper}>

@@ -1,6 +1,9 @@
 import { BlocksContent, BlocksRenderer } from '@strapi/blocks-react-renderer';
-import { APIResponseCollection } from '@/types/strapi';
+import { APIResponseCollection, APIResponse } from '@/types/strapi';
 import styles from './portfolio.module.scss';
+import viewports from '@/lib/viewports';
+import { ArrowUpRight } from 'react-feather';
+import StrapiMedia from '@/components/StrapiMedia/StrapiMedia';
 
 interface ImageProps {
     src: string;
@@ -8,10 +11,11 @@ interface ImageProps {
 }
 
 interface LinkProps {
-    url: string,
-    text: string,
-    ariaLabel?: string,
-    external?: boolean,
+    url: string;
+    link_text: string;
+    meta?: {
+        external?: boolean;
+    }
 }
 
 interface ShowcaseItemInfoProps {
@@ -24,26 +28,24 @@ interface ShowcaseItemInfoProps {
 interface ShowcaseItemProps {
     img: ImageProps;
     title: string;
-    info?: ShowcaseItemInfoProps;
+    info?: BlocksContent;
+    links?: LinkProps[]
 }
 
+// this could just be APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group">
 interface PieceGroupProps {
     info?: BlocksContent;
     description?: BlocksContent;
     tech_tags?: Omit<APIResponseCollection<"api::tech-tag.tech-tag">, "meta">;
-    showcase?: {
-        layout?: number;
-        items: ShowcaseItemProps[];
-    }
+    portfolio_pieces?: Omit<APIResponseCollection<"api::portfolio-piece.portfolio-piece">, "meta">;
 }
 
 const PortfolioPieceGroup: React.FC<PieceGroupProps> = ({
     info,
     description, 
     tech_tags,
-    showcase
+    portfolio_pieces
 }) => {
-    console.log(info, description, tech_tags);
     return (
         <section className={styles.portfolioPiece}>
             <div className={styles.infoWrapper}>
@@ -65,31 +67,31 @@ const PortfolioPieceGroup: React.FC<PieceGroupProps> = ({
                 </div>
             </div>
             <div className={styles.showcase}>
-                { showcase && showcase.items.map((item, i) => {
-
+                { portfolio_pieces && Object.values(portfolio_pieces.data).map((p, i) => {
                     return (
                         <div className={styles.showcaseItem} key={i}>
-                            <Image {...item.img} />
-                            { item.info?         
-                                <ShowcaseItemInfo {...item.info} />
-                            : ''}
-                        </div>  
+                            <StrapiMedia mediaData={{ ...p.attributes.poster_image }} className={styles.image} sizes={{
+                                xsmall: viewports.small,
+                                small: viewports.medium / 2,
+                                medium: viewports.large / 3,
+                                large: viewports.xlarge / 3
+                            }}/>
+                            <div className={styles.showcaseItemInfo}>
+                                <div className={styles.showcaseItemInfoInner}>
+                                    <h3>{p.attributes.title}</h3>
+                                    { p.attributes.info && 
+                                        <BlocksRenderer content={p.attributes.info} />
+                                    }
+                                    { p.attributes.links &&
+                                        p.attributes.links.map((link, i) => <p key={i}><a href={link.url} target="_blank">{link.link_text}{ link.meta?.external ? <ArrowUpRight /> : '' }</a></p>)
+                                    }
+                                </div> 
+                            </div>
+                        </div>
                     )
                 })}
             </div>
         </section>
-    )
-}
-
-const ShowcaseItemInfo: React.FC<ShowcaseItemInfoProps> = ({title, description, links = []}) => {
-    return (
-        <div className={styles.showcaseItemInfo}>
-            <div className={styles.showcaseItemInfoInner}>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                { links.map((link, i) => <p key={i}><a href={link.url} target="_blank">{link.text}{ link.external ? <ArrowUpRight /> : '' }</a></p>) }
-            </div> 
-        </div>
     )
 }
 
