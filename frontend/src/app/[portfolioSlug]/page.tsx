@@ -10,7 +10,7 @@ interface ParamsProps {
 }
 
 async function getData(id: number) {
-  const res = await fetch("http://127.0.0.1:1337/api/portfolio-pages/" + id + "?" + new URLSearchParams({
+  const res = await fetch(process.env["STRAPI_API"] + "/portfolio-pages/" + id + "?" + new URLSearchParams({
     "populate[0]": "portfolio_piece_groups",
     "populate[1]": "portfolio_piece_groups.tech_tags",
     "populate[2]": "portfolio_piece_groups.portfolio_pieces",
@@ -35,7 +35,7 @@ async function getData(id: number) {
 }
 
 export async function generateStaticParams() {
-  const res = await fetch('http://127.0.0.1:1337/api/portfolio-pages/', {
+  const res = await fetch(process.env["STRAPI_API"] + '/portfolio-pages/', {
       method: 'GET',
       headers: {
           'Authorization': 'bearer ' + process.env["CMS_TOKEN"]
