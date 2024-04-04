@@ -5,32 +5,34 @@ import viewports from '@/lib/viewports';
 import { ArrowUpRight } from 'react-feather';
 import StrapiMedia from '@/components/StrapiMedia/StrapiMedia';
 
+type Unpacked<T> = T extends (infer U)[] ? U : T;
+
 interface ImageProps {
     src: string;
     alt?: string;
 }
 
-interface LinkProps {
-    url: string;
-    link_text: string;
-    meta?: {
-        external?: boolean;
-    }
-}
+// interface LinkProps {
+//     url: string;
+//     link_text: string;
+//     meta?: {
+//         external?: boolean;
+//     }
+// }
 
-interface ShowcaseItemInfoProps {
-    title: string;
-    description: string;
-    links?: LinkProps[];
-    awards?: string[];
-}
+// interface ShowcaseItemInfoProps {
+//     title: string;
+//     description: string;
+//     links?: LinkProps[];
+//     awards?: string[];
+// }
 
-interface ShowcaseItemProps {
-    img: ImageProps;
-    title: string;
-    info?: BlocksContent;
-    links?: LinkProps[]
-}
+// interface ShowcaseItemProps {
+//     img: ImageProps;
+//     title: string;
+//     info?: BlocksContent;
+//     links?: LinkProps[]
+// }
 
 // this could just be APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group">
 interface PieceGroupProps {
@@ -69,31 +71,52 @@ const PortfolioPieceGroup: React.FC<PieceGroupProps> = ({
             <div className={styles.showcase}>
                 { portfolio_pieces && Object.values(portfolio_pieces.data).map((p, i) => {
                     return (
-                        <div className={styles.showcaseItem} key={i}>
-                            <StrapiMedia mediaData={{ ...p.attributes.poster_image }} className={styles.image} sizes={{
-                                xsmall: viewports.small,
-                                small: viewports.medium / 2,
-                                medium: viewports.large / 3,
-                                large: viewports.xlarge / 3
-                            }}/>
-                            <div className={styles.showcaseItemInfo}>
-                                <div className={styles.showcaseItemInfoInner}>
-                                    <h3>{p.attributes.title}</h3>
-                                    { p.attributes.info && 
-                                        <BlocksRenderer content={p.attributes.info} />
-                                    }
-                                    { p.attributes.links &&
-                                        p.attributes.links.map((link, i) => <p key={i}><a href={link.url} target="_blank">{link.link_text}{ link.meta?.external ? <ArrowUpRight /> : '' }</a></p>)
-                                    }
-                                </div> 
-                            </div>
-                        </div>
+                        <PortfolioPiece {...p} key={i} />
                     )
                 })}
             </div>
         </section>
     )
 }
+
+const PortfolioPiece: React.FC<APIResponse<"api::portfolio-piece.portfolio-piece">["data"]> = (piece) => {    
+    return (
+        <div className={styles.showcaseItem}>
+            <StrapiMedia mediaData={{ ...piece.attributes.poster_image }} className={styles.image} sizes={{
+                xsmall: viewports.small,
+                small: viewports.medium / 2,
+                medium: viewports.large / 3,
+                large: viewports.xlarge / 3
+            }}/>
+            <div className={styles.showcaseItemInfo}>
+                <div className={styles.showcaseItemInfoInner}>
+                    <h3>{piece.attributes.title}</h3>
+                    { piece.attributes.info && 
+                        <BlocksRenderer content={piece.attributes.info} />
+                    }
+                    { piece.attributes.links &&
+                        piece.attributes.links.map((link, i) => <CustomLink {...link} key={i} />)
+                    }
+                </div> 
+            </div>
+        </div>
+    )
+}
+
+type CustomLinkType = Unpacked<APIResponse<"api::portfolio-piece.portfolio-piece">["data"]["attributes"]["links"]>
+const CustomLink: React.FC<CustomLinkType> = (link) => {
+    if (link == undefined) {
+        return 
+    }
+
+    // workaround for strapi's JSON value type
+    const meta = JSON.parse(JSON.stringify(link.meta || {}));
+
+    return (
+        <p><a href={link.url} target="_blank">{link.link_text}{ meta.external ? <ArrowUpRight /> : '' }</a></p>
+    )
+}
+
 
 const Image: React.FC<ImageProps> = ({src, alt = ''}) => {
     return (

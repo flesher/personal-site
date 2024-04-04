@@ -1,0 +1,20 @@
+$breakpoints: (
+    small: 400px,
+    medium: 700px,
+    large: 1000px,
+    xlarge: 1400px,
+);
+
+:export {
+    @each $name, $size in $breakpoints {
+        #{$name}: $size
+    }
+}
+
+@mixin viewport($name) {
+    $bp: map-get($breakpoints, $name);
+    
+    @media screen and (min-width: #{$bp}) {
+        @content;
+    }
+}
