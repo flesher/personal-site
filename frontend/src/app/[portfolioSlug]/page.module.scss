@@ -1,0 +1,43 @@
+@import "@/styles/viewports.module.scss";
+@import "@/styles/shared.scss";
+
+.main {
+    display: block;
+    padding-top: 60px;
+    
+    @include viewport(small) {
+        padding-top: 80px;
+    }
+
+    @include viewport(medium) {
+        padding-top: 100px;
+    }
+}
+
+.navWrapper {
+    @include section-padding;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    max-width: 900px;
+    
+    @include viewport(small) {
+        top: 30px;
+    }
+
+    @include viewport(medium) {
+        top: 40px;
+    }
+
+    @include viewport(large) {
+        top: 113px;
+        max-width: 1200px;
+    }
+
+    @include viewport(xlarge) {
+        max-width: 1400px;
+    }
+
+}

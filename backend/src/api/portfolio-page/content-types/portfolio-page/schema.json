@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "portfolio_pages",
+  "info": {
+    "singularName": "portfolio-page",
+    "pluralName": "portfolio-pages",
+    "displayName": "Portfolio Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "coverLetter": {
+      "type": "blocks",
+      "required": true
+    },
+    "password": {
+      "type": "password"
+    },
+    "portfolio_piece_groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio-piece-group.portfolio-piece-group",
+      "mappedBy": "portfolio_pages"
+    },
+    "slug": {
+      "type": "uid"
+    }
+  }
+}

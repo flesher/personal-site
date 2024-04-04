@@ -1,0 +1,78 @@
+@import "@/styles/typography.scss";
+@import "@/styles/viewports.module.scss";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 0;
+  min-height: 100vh;
+}
+
+.canvasWrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 75vh;
+
+  canvas {
+    opacity: 0.001;
+    transform: scale3d(0.9, 0.9, 0.9);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  
+  }
+
+  &.showDiscoBall canvas {
+    opacity: 0.999;
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
+.copyWrapper {
+  width: 100%;
+  max-width: 550px;
+  text-align: center;
+  margin-top: -30px;
+}
+
+.heading {
+  @include use-typography("14_semibold");
+  margin-bottom: 1em;
+
+  @include viewport(small) {
+    @include use-typography("16_semibold");
+  }
+
+  @include viewport(medium) {
+    @include use-typography("20_semibold");
+  }
+}
+
+.copy {
+  @include use-typography("12_regular");
+  margin-bottom: 1em;
+
+  @include viewport(small) {
+    @include use-typography("14_regular");
+  }
+
+  @include viewport(medium) {
+    @include use-typography("16_regular");
+  }
+}
+
+.contactLinks {
+  width: 120px;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 50px auto;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

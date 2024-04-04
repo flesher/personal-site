@@ -1,0 +1,47 @@
+{
+  "kind": "collectionType",
+  "collectionName": "portfolio_pieces",
+  "info": {
+    "singularName": "portfolio-piece",
+    "pluralName": "portfolio-pieces",
+    "displayName": "Portfolio Piece",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "blocks": {
+      "type": "blocks"
+    },
+    "poster_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "portfolio_piece_groups": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::portfolio-piece-group.portfolio-piece-group",
+      "mappedBy": "portfolio_pieces"
+    },
+    "info": {
+      "type": "blocks"
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "link.custom-link"
+    }
+  }
+}
