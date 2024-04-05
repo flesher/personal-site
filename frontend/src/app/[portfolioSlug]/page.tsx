@@ -63,6 +63,7 @@ export async function generateStaticParams() {
  
 export default async function Page({ params }: { params: ParamsProps }) {
   const page = await getData(1) as APIResponse<"api::portfolio-page.portfolio-page">;
+  console.log(page);
 
   if (page) {
     return (
