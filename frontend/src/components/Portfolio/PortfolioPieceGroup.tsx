@@ -12,29 +12,7 @@ interface ImageProps {
     alt?: string;
 }
 
-// interface LinkProps {
-//     url: string;
-//     link_text: string;
-//     meta?: {
-//         external?: boolean;
-//     }
-// }
-
-// interface ShowcaseItemInfoProps {
-//     title: string;
-//     description: string;
-//     links?: LinkProps[];
-//     awards?: string[];
-// }
-
-// interface ShowcaseItemProps {
-//     img: ImageProps;
-//     title: string;
-//     info?: BlocksContent;
-//     links?: LinkProps[]
-// }
-
-// this could just be APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group">
+// this could just be APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group">?
 interface PieceGroupProps {
     info?: BlocksContent;
     description?: BlocksContent;

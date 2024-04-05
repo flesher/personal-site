@@ -14,9 +14,6 @@ export interface PortfolioProps {
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({coverLetter, portfolio_piece_groups}: PortfolioProps) => {
-
-    console.log(portfolio_piece_groups);
-
     return (
         <>
             <header className={styles.coverLetter}>

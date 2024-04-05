@@ -65,7 +65,6 @@ export default async function Page({ params }: { params: ParamsProps }) {
   const page = await getData(1) as APIResponse<"api::portfolio-page.portfolio-page">;
 
   if (page) {
-    // console.log('page', page.data.attributes.portfolio_piece_groups?.data);
     return (
       <main className={styles.main}>
           <nav className={styles.navWrapper}>
