@@ -1,0 +1,1 @@
+npm run strapi transfer --to https://mattfleshercom.onrender.com/admin/ --only content files --to-token 2a4236d94fc61bb132284ac9fdcde53cbfb768a8b2a73266915cd8d812048bd0d31c76083e0d6a778b2527c787eaf5feb5cb6fa525900da823c6dd3f55c56a329441fd19c01976d0432fcf73cf0335e98675fe8c446b1b7d82129b46db2c90c644e91fd61efcbf28294d7c3195dfd538b2318090fd539282dfff5ae120587d9b

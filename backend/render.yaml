@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: strapi
+    name: mattfleshercom
     env: node
     plan: starter
     buildCommand: npm install && npm build
@@ -30,5 +30,5 @@ services:
         generateValue: true
 
 databases:
-  - name: strapi
+  - name: pg-strapi
     plan: starter
