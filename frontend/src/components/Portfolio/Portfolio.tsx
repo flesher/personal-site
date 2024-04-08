@@ -9,16 +9,18 @@ import styles from './portfolio.module.scss';
 import PortfolioPieceGroup from './PortfolioPieceGroup';
 
 export interface PortfolioProps {
-    coverLetter: BlocksContent;
+    coverLetter?: BlocksContent;
     portfolio_piece_groups?: Omit<APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group"> , "meta">;
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({coverLetter, portfolio_piece_groups}: PortfolioProps) => {
     return (
         <>
-            <header className={styles.coverLetter}>
-                <BlocksRenderer content={coverLetter} />               
-            </header>
+            { coverLetter && 
+                <header className={styles.coverLetter}>
+                    <BlocksRenderer content={coverLetter} />               
+                </header>          
+            }
 
            { portfolio_piece_groups?.data && Object.values(portfolio_piece_groups.data).map((g, i) => <PortfolioPieceGroup {...g.attributes} key={i} /> ) }
  
