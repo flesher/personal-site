@@ -16,8 +16,8 @@ interface ImageProps {
 interface PieceGroupProps {
     info?: BlocksContent;
     description?: BlocksContent;
-    tech_tags?: Omit<APIResponseCollection<"api::tech-tag.tech-tag">, "meta">;
-    portfolio_pieces?: Omit<APIResponseCollection<"api::portfolio-piece.portfolio-piece">, "meta">;
+    tech_tags?: APIResponseCollection<"api::tech-tag.tech-tag">;
+    portfolio_pieces?: APIResponseCollection<"api::portfolio-piece.portfolio-piece">;
 }
 
 const PortfolioPieceGroup: React.FC<PieceGroupProps> = ({
