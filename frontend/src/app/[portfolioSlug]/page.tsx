@@ -72,7 +72,7 @@ export default async function Page({ params }: { params: ParamsProps }) {
             <a href="/"><ArrowLeft /></a>
           </nav>
           
-          <Portfolio {...page.data.attributes} />
+          <Portfolio coverLetter={page.data.attributes.coverLetter} portfolio_piece_groups={page.data.attributes.portfolio_piece_groups} />
       </main>
     );
   }
