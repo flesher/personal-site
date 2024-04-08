@@ -42,7 +42,7 @@ const PortfolioPieceGroup: React.FC<PieceGroupProps> = ({
      
                 <div className={styles.technologies}>
                     <ul className={styles.techList}>
-                        { tech_tags && Object.values(tech_tags.data).map((t, i) => <li key={i}><span>{t.attributes.tag ? t.attributes.tag : ''}</span></li> )}
+                        {/* { tech_tags && Object.values(tech_tags.data).map((t, i) => <li key={i}><span>{ t.attributes.tag }</span></li> )} */}
                     </ul>
                 </div>
             </div>
