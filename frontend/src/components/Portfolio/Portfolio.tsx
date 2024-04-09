@@ -10,7 +10,7 @@ import PortfolioPieceGroup from './PortfolioPieceGroup';
 
 export interface PortfolioProps {
     coverLetter?: BlocksContent;
-    portfolio_piece_groups?: Omit<APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group"> , "meta">;
+    portfolio_piece_groups?: Omit<APIResponseCollection<"api::portfolio-piece-group.portfolio-piece-group">, "meta">;
 }
 
 const Portfolio: React.FC<PortfolioProps> = ({coverLetter, portfolio_piece_groups}: PortfolioProps) => {
