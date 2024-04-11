@@ -16,10 +16,11 @@ interface SizeT {
 interface StrapiProps {
     mediaData: { data?: APIResponseData<"plugin::upload.file"> | undefined };
     sizes: { [key: string]: number };
+    useNatural?: boolean;
     className: string;
 }
 
-const StrapiMedia: React.FC<StrapiProps> = ({mediaData, sizes = {}, ...rest}) => {
+const StrapiMedia: React.FC<StrapiProps> = ({mediaData, sizes = {}, useNatural = false, ...rest}) => {
     if (!mediaData?.data?.attributes) {
         return;
     }
@@ -32,6 +33,18 @@ const StrapiMedia: React.FC<StrapiProps> = ({mediaData, sizes = {}, ...rest}) =>
         },
         ...(mediaData.data.attributes.formats || {}) as object 
     };
+
+    // gifs are not animated after goin through strapi upload so we need to use og
+    if (useNatural || formats.natural.url.includes(".gif")) {
+        return (
+            <picture {...rest}>
+                <img 
+                    src={urlBuilder(mediaData.data.attributes.url)} 
+                    alt={mediaData.data.attributes.alternativeText || ""} 
+                />
+            </picture>    
+        )
+    }
 
     const sources = Object.entries(sizes).reduce((
         acc: SourceT[],

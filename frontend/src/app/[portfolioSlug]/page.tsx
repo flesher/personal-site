@@ -9,6 +9,30 @@ interface ParamsProps {
   portfolioSlug: string;
 }
 
+async function getPages() {
+  const res = await fetch(process.env["STRAPI_API"] + "/portfolio-pages?" + new URLSearchParams({
+    "populate[0]": "portfolio_piece_groups",
+    "populate[1]": "portfolio_piece_groups.tech_tags",
+    "populate[2]": "portfolio_piece_groups.portfolio_pieces",
+    "populate[3]": "portfolio_piece_groups.portfolio_pieces.poster_image",
+    "populate[4]": "portfolio_piece_groups.portfolio_pieces.info",
+    "populate[5]": "portfolio_piece_groups.portfolio_pieces.links",
+    "populate[6]": "portfolio_piece_groups.portfolio_pieces.links.meta",
+    "populate[7]": "portfolio_piece_groups.portfolio_pieces.title"
+  }), {
+    method: 'GET',
+    headers: {
+        'Authorization': 'bearer ' + process.env["CMS_TOKEN"]
+    }
+  });
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
+
 async function getData(id: number) {
   const res = await fetch(process.env["STRAPI_API"] + "/portfolio-pages/" + id + "?" + new URLSearchParams({
     "populate[0]": "portfolio_piece_groups",
@@ -34,6 +58,8 @@ async function getData(id: number) {
   return res.json();
 }
 
+
+// maps slug to url
 export async function generateStaticParams() {
   const res = await fetch(process.env["STRAPI_API"] + '/portfolio-pages/', {
       method: 'GET',
@@ -62,8 +88,8 @@ export async function generateStaticParams() {
 }
  
 export default async function Page({ params }: { params: ParamsProps }) {
-  const page = await getData(1) as APIResponse<"api::portfolio-page.portfolio-page">;
-  console.log(page);
+  const pages = await getPages();
+  const page = pages.data.find((p: any) => p.attributes.slug == params.portfolioSlug);
 
   if (page) {
     return (
@@ -72,7 +98,7 @@ export default async function Page({ params }: { params: ParamsProps }) {
             <a href="/"><ArrowLeft /></a>
           </nav>
           
-          <Portfolio {...page.data.attributes} />
+          <Portfolio {...page.attributes} />
       </main>
     );
   }
