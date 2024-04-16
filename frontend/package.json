@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines" : { 
-    "node" : "18.19"
+  "engines": {
+    "node": "18.19"
   },
   "scripts": {
     "dev": "next dev",
@@ -14,6 +14,7 @@
     "sync": "env-cmd -f .env.local node scripts/sync.js && rm -rf .next"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.1",
     "@strapi/blocks-react-renderer": "^1.0.0",
     "@types/three": "^0.160.0",
     "@vercel/kv": "^1.0.1",

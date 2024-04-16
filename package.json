@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@next/third-parties": "^14.2.1",
     "@strapi/strapi": "^4.20.1"
   }
 }
