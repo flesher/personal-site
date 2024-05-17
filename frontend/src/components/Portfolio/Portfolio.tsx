@@ -37,4 +37,3 @@ const Portfolio: React.FC<PortfolioProps> = ({coverLetter, portfolio_piece_group
 }
 
 export default Portfolio;
-

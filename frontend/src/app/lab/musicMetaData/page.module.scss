@@ -1,0 +1,50 @@
+@import "@/styles/typography.scss";
+@import "@/styles/viewports.module.scss";
+
+.wrapper {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+.form {
+    width: 800px;
+    margin: 0 auto;
+    display: flex;
+    padding-top: 100px;
+
+    * {
+        @include use-typography("20_semibold");
+        line-height: 40px;
+        font-family: inherit;
+    }
+
+    input {
+        display: block;
+        box-sizing: border-box;
+        flex-grow: 1;
+        border: none;
+        border-radius: none;
+        box-shadow: none;
+        padding: 0 12px;
+        overflow: visible;
+    }
+
+    button {
+        width: 200px;
+        border: none;
+        box-shadow: none;
+        color: #fff;
+        background-color: black;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+        
+}
+
+.results {
+    width: 800px;
+    margin: 0 auto;
+    padding-top: 50px;
+}

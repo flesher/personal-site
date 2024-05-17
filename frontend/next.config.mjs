@@ -11,6 +11,18 @@ const nextConfig = {
         // !! WARN !!
         ignoreBuildErrors: true,
     },
+    async rewrites() {
+        return [
+          {
+            source: '/one-music-api/:path*',
+            destination: 'http://api.onemusicapi.com/:path*',
+          },
+          {
+            source: '/musicbrainz/:path*',
+            destination: 'https://musicbrainz.org/ws/2/:path*'
+          }
+        ]
+    },
 };
 
 export default nextConfig;

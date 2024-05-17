@@ -17,7 +17,7 @@ function loadImage(src: string, cb: () => void): void {
 
 export default function Home() {
   const [shouldAnimate, setShouldAnimate] = useState<boolean>(false);
-  const matCapPath = '/matcap/face-5.png';
+  const matCapPath = '/matcap/abstract-face-2.png';
 
   useEffect(() => {
     loadImage(matCapPath, () => {
