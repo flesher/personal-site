@@ -2,8 +2,10 @@
 
 import styles from "./page.module.scss";
 import React, { useState, useRef } from "react";
+import Link from 'next/link'
 
-const BASE_URL = "/one-music-api/20220401/release?"
+import Loader from '@/components/shared/Loader/loader';
+import { createSearchURL } from './api';
 
 type Artist = {
     name: string;
@@ -20,7 +22,6 @@ type Release = {
 
 interface ResultsProps {
     releases?: any[]
-    loading: boolean
 }
 
 function artistName(artistCredit: Artist[]) {
@@ -29,19 +30,23 @@ function artistName(artistCredit: Artist[]) {
     }, '')
 }
 
-const Results = ({releases, loading}: ResultsProps) => {
-    if (loading == true) return <div className={styles.results}>loading...</div>
+const Results = ({ releases }: ResultsProps) => {
 
     return (
         <div className={styles.results}>
             <ul>
-                {releases && releases.map((release) => {
+                {releases && releases.map((release, i) => {
+                    console.log(release);
                     return (
-                        <li><a href="#">{artistName(release['artist-credit'])} - {release.title}</a></li>
+                        <li key={i}>
+                            <Link href={{
+                                pathname: '/lab/musicMetaData/' + release.id
+                            }}>
+                                {artistName(release['artist-credit'])} - {release.title}</Link>
+                        </li>
                     )
                 })}
             </ul>
-
         </div>
     )
 }
@@ -59,14 +64,13 @@ export default function Page() {
         }
         
         setLoading(true);
-        const response = await fetch(`/musicbrainz/release?query=${inputRef.current.value}&fmt=json`)
+        const url = createSearchURL('release', inputRef.current.value)
+        const response = await fetch(url);
         const data = await response.json();
         data.releases.forEach((rel: any) => console.log(rel['artist-credit']));
 
         setResultsData(data);
         setLoading(false);
-
-        
     }
 
     return (
@@ -76,8 +80,7 @@ export default function Page() {
                 <button onClick={search}>Search</button>
             </form>
 
-            <Results {...resultsData} loading={loading}/>
-
+            { loading ? <Loader /> : <Results {...resultsData} /> }
         </div>
     )
 };
